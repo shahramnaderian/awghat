@@ -34,3 +34,18 @@
 - app.py: رابط کاربری و چهار مرحله تحلیل
 - requirements.txt: وابستگی‌ها
 - .env.example: نمونه تنظیمات بدون کلید محرمانه
+
+
+## اجرای آنلاین با Streamlit Community Cloud
+1. وارد Streamlit Community Cloud شوید و حساب GitHub را متصل کنید.
+2. گزینه New app را انتخاب کنید و این مخزن و فایل اصلی app.py را مشخص کنید.
+3. در App settings → Secrets مقدار زیر را ثبت کنید:
+   ```toml
+   OPENAI_API_KEY = "کلید-واقعی-شما"
+   OPENAI_MODEL = "gpt-4.1-mini"
+   MAX_UPLOAD_MB = "12"
+   ```
+4. Deploy را بزنید. کلید API را در کد یا فایل‌های مخزن قرار ندهید.
+
+## وضعیت اعتبارسنجی
+یک GitHub Actions workflow برای بررسی نحوی app.py با Python 3.11 در هر push تعریف شده است. اجرای واقعی برنامه نیازمند نصب وابستگی‌ها و تنظیم کلید API معتبر است.
