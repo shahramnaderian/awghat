@@ -3,6 +3,7 @@ import io
 import json
 import base64
 import re
+import html
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -33,7 +34,7 @@ st.set_page_config(page_title="دستیار تحلیل آزمایش خون", pag
 
 MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "12"))
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
-API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None) if hasattr(st, "secrets") else os.getenv("OPENAI_API_KEY")
+try:\n    API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)\nexcept Exception:\n    API_KEY = os.getenv("OPENAI_API_KEY")
 
 EXTRACTION_SCHEMA = {
     "type": "object",
@@ -192,7 +193,7 @@ def agent_3_explain(client, comparisons, context):
 
 
 def rtl(text):
-    text = str(text or "")
+    text = html.escape(str(text or ""))
     if arabic_reshaper and get_display:
         try:
             return get_display(arabic_reshaper.reshape(text))
