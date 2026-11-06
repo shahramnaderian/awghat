@@ -32,12 +32,16 @@ except Exception:
 load_dotenv()
 st.set_page_config(page_title="دستیار تحلیل آزمایش خون", page_icon="🩸", layout="wide")
 
-MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "12"))
-MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
-try:
-    API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)
-except Exception:
-    API_KEY = os.getenv("OPENAI_API_KEY")
+def get_setting(name, default=None):
+    try:
+        return st.secrets.get(name, os.getenv(name, default))
+    except Exception:
+        return os.getenv(name, default)
+
+
+MAX_UPLOAD_MB = int(get_setting("MAX_UPLOAD_MB", "12"))
+MODEL = get_setting("OPENAI_MODEL", "gpt-4.1-mini")
+API_KEY = get_setting("OPENAI_API_KEY")
 
 EXTRACTION_SCHEMA = {
     "type": "object",
