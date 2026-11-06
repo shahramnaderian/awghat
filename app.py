@@ -34,7 +34,10 @@ st.set_page_config(page_title="دستیار تحلیل آزمایش خون", pag
 
 MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "12"))
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
-try:\n    API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)\nexcept Exception:\n    API_KEY = os.getenv("OPENAI_API_KEY")
+try:
+    API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)
+except Exception:
+    API_KEY = os.getenv("OPENAI_API_KEY")
 
 EXTRACTION_SCHEMA = {
     "type": "object",
